@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, } from "react-router-dom";
+import axios from "axios";
 
 const schema = yup
   .object({
@@ -11,6 +12,7 @@ const schema = yup
   .required();
 
 export default function Signin() {
+    const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -18,7 +20,22 @@ export default function Signin() {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:5051/api/v1/instructor/signin",
+        data,
+        {
+          withCredentials: true,
+        },
+      );
+      console.log(res.data);
+      navigate('/instructor/dashboard');
+     
+    } catch (error) {
+      console.log( error);
+    }
+  };
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -38,7 +55,7 @@ export default function Signin() {
       {errors.password && <p>{errors.password.message}</p>}
       <input type="submit" className="rounded-md bg-blue-500 py-1 text-white" />
       <p>
-        Instructor not created yet{" "}
+        Instructor not created yet
         <Link to="/instructor/signup" className="text-blue-500 underline">
           Signup
         </Link>

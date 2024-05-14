@@ -1,4 +1,4 @@
-import Signin from "../../components/instructor/Signin";
+import Signin from "../../components/instructor/InstructorSignin.jsx";
 
 const SigninPage = () => {
   return (

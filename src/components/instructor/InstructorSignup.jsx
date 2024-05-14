@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 
 const schema = yup
   .object({
@@ -13,6 +13,8 @@ const schema = yup
   .required();
 
 export default function Signup() {
+    const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -29,6 +31,7 @@ export default function Signup() {
         },
       );
       console.log(res.data);
+      navigate('/instructor/dashboard')
      
     } catch (error) {
       console.log( error);

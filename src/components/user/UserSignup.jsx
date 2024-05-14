@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const schema = yup
@@ -14,6 +14,8 @@ const schema = yup
   .required();
 
 export default function Signup() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -27,11 +29,12 @@ export default function Signup() {
         data,
         {
           withCredentials: true,
-        },
+        }
       );
+
       console.log(res.data);
-    console.log(data);
-     
+      console.log(data);
+      navigate("/user/");
     } catch (error) {
       console.log(error);
     }
@@ -75,4 +78,3 @@ export default function Signup() {
     </form>
   );
 }
-
